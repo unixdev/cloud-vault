@@ -1,0 +1,18 @@
+# Idea
+.idea/
+.fleet/
+
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__
+*.sqlite3
+media
+
+.env
+ENV/
+
+# tailwind
+node_modules/
+static/css/output.css
