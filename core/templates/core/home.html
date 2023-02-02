@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <h1>Welcome to Cloud Vault</h1>
+
+    <p>
+    This is our Cloud Vault home page.
+    </p>
+
+    <p>
+    You are logged in with phone number: {{ user.phone }}
+    </p>
+
+    <p>
+    Make sure you <a href="{{ logout_url }}">Log Out</a> before you go away.
+    </p>
+{% endblock content %}
