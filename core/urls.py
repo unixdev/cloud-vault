@@ -10,5 +10,7 @@ urlpatterns = [
     path('login/', views.VaultLoginView.as_view(), name='login'),
     path('logout/', views.VaultLogoutView.as_view(), name='logout'),
     path('verify/<str:phone>/', views.VerificationView.as_view(), name='verify'),
+    path('documents/upload', views.DocumentCreateView.as_view(), name='upload'),
+    path('documents/', views.DocumentListView.as_view(), name='list'),
     path('home/', views.home, name='home'),
 ]

@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+# noinspection PyPackageRequirements
 import environ
 import sys
+import os
 
 env = environ.Env(
     DEBUG=(bool, True)
@@ -168,3 +170,9 @@ LOGGING = {
 }
 
 SMS_API_KEY = env('SMS_API_KEY')
+
+STORAGE_DIR = os.path.abspath(env('STORAGE_DIR', default='/usr/local/var/cloud_vault/'))
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(STORAGE_DIR, 'media')
+

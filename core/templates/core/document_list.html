@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <h1>Your Documents</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Filename</th>
+            <th>Uploaded At</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for document in object_list %}
+            <tr>
+            <td>{{ document.file.name }}</td>
+            <td>{{ document.created_at }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+            <td colspan="2">
+                No documents yet.
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <a href="{% url 'core:upload' %}">Upload New Document</a>
+
+{% endblock content %}

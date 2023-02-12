@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.utils.translation import gettext_lazy as _
 
@@ -33,3 +34,27 @@ class Verification(models.Model):
     user = models.OneToOneField(User, models.CASCADE)
     code = models.CharField(_('verification code'), max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+def file_location(document, filename):
+    return f'documents/{document.user.id}/{filename}'
+
+
+def validate_file_size(file):
+    limit = 2 * 1024 * 1024
+    if file.size > limit:
+        raise ValidationError(_('Maximum allowed file size is 2MB'))
+
+
+class Document(models.Model):
+    """
+    Represent and uploaded document/file.
+    """
+    user = models.ForeignKey(User, models.CASCADE)
+    file = models.FileField(
+        validators=[validate_file_size],
+        upload_to=file_location,
+    )
+    note = models.TextField(max_length=1000, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+

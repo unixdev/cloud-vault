@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import SignupForm, VerificationForm
+from .models import Document
 
 from logging import getLogger
 
@@ -82,4 +83,21 @@ class VerificationView(FormView):
         return super().form_valid(form)
 
 
+class DocumentCreateView(CreateView):
+    model = Document
+    fields = ('file', 'note')
+    success_url = reverse_lazy('core:list')
+
+    def form_valid(self, form):
+        document = form.save(commit=False)
+        document.user = self.request.user
+        return super().form_valid(form)
+
+
+class DocumentListView(ListView):
+    model = Document
+
+    def get_queryset(self):
+        user = self.request.user
+        return super().get_queryset().filter(user=user).order_by('created_at')
 
