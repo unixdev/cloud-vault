@@ -1,14 +1,19 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, FormView
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import SignupForm
+from .forms import SignupForm, VerificationForm
 
 
 class SignupView(CreateView):
     form_class = SignupForm
     template_name = 'core/signup.html'
-    success_url = reverse_lazy('core:signup_success')
+    success_url = reverse_lazy('core:verify')
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.is_active = False
+        return super().form_valid(form)
 
 
 def signup_success(request):
@@ -50,3 +55,16 @@ def landing(request):
     }
 
     return render(request, 'core/landing.html', context)
+
+
+class VerificationView(FormView):
+    form_class = VerificationForm
+    template_name = 'core/verification.html'
+    success_url = reverse_lazy('core:signup_success')
+
+    def form_valid(self, form):
+        form.activate_user()
+        return super().form_valid(form)
+
+
+

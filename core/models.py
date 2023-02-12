@@ -24,3 +24,12 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'phone'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+
+class Verification(models.Model):
+    """
+    Holds verification codes/OTP.
+    """
+    user = models.OneToOneField(User, models.CASCADE)
+    code = models.CharField(_('verification code'), max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <h1>Verify Phone Number</h1>
+
+    <p>
+    We have sent a verification code SMS to your phone. Please enter
+    that verification code below:
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_div }}
+
+        <input type="submit" value="Verify">
+    </form>
+{% endblock content %}
