@@ -10,7 +10,7 @@ class User(AbstractBaseUser):
     """
     phone = models.CharField(
         _('phone number'),
-        validators=[RegexValidator(regex=r'^0[0-9]+$')],
+        validators=[RegexValidator(regex=r'^0[0-9]{10}$')],
         max_length=11,
         help_text='e.g. 01712345678',
         unique=True
