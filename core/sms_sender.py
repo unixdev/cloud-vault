@@ -1,5 +1,5 @@
 import requests
-from cloud_vault.settings import SMS_API_KEY
+from django.conf import settings
 
 from logging import getLogger
 
@@ -14,10 +14,14 @@ def send(phone, message):
         phone: The phone number, e.g. 01712345678
         message: The text message to send
     """
+    if settings.TESTING:
+        logger.debug('skipping sending sms to phone %s', phone)
+        return
+
     logger.debug('sending sms to phone %s', phone)
 
     payload = {
-        'api_key': SMS_API_KEY,
+        'api_key': settings.SMS_API_KEY,
         'type': 'text',
         'contacts': '88' + phone,
         'senderid': 11209,

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import environ
+import sys
 
 env = environ.Env(
     DEBUG=(bool, True)
@@ -21,6 +22,8 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(BASE_DIR / '.env')
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 
 # Quick-start development settings - unsuitable for production
