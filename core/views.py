@@ -20,6 +20,9 @@ class SignupView(CreateView):
         user.is_active = False
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse('core:verify', args=[self.object.phone])
+
 
 def signup_success(request):
     context = {
@@ -66,6 +69,13 @@ class VerificationView(FormView):
     form_class = VerificationForm
     template_name = 'core/verification.html'
     success_url = reverse_lazy('core:signup_success')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial.update({
+            'phone': self.kwargs['phone']
+        })
+        return initial
 
     def form_valid(self, form):
         form.activate_user()

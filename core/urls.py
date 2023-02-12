@@ -9,6 +9,6 @@ urlpatterns = [
     path('signup_success/', views.signup_success, name='signup_success'),
     path('login/', views.VaultLoginView.as_view(), name='login'),
     path('logout/', views.VaultLogoutView.as_view(), name='logout'),
-    path('verify/', views.VerificationView.as_view(), name='verify'),
+    path('verify/<str:phone>/', views.VerificationView.as_view(), name='verify'),
     path('home/', views.home, name='home'),
 ]
