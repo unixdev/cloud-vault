@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from .models import User, Verification
+from .sms_sender import send
 
 from logging import getLogger
 
@@ -37,6 +38,10 @@ class SignupForm(UserCreationForm):
                 verification = Verification(user=user, code=code)
                 verification.save()
             logger.info('set verification for %s with code: %s', user.phone, code)
+
+            # send the verification code through SMS
+            send(user.phone, f'Cloud Vault Verification Code: {code}')
+
             return user
 
         return super().save(False)
