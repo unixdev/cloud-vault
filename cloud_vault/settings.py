@@ -129,3 +129,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #
 AUTH_USER_MODEL = 'core.User'
 LOGIN_REDIRECT_URL = '/core/home'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'vault': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        # 'django.db.backends': {
+        #     'handlers': ['file'],
+        #     'level': 'DEBUG',
+        #     'propagate': False,
+        # },
+    },
+}

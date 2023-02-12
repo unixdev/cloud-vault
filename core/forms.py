@@ -5,10 +5,14 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from .models import User, Verification
 
+from logging import getLogger
+
 import secrets
 import string
 
 VERIFY_CODE_LENGTH = 6
+
+logger = getLogger('vault.core')
 
 
 def gen_verify_code():
@@ -32,7 +36,8 @@ class SignupForm(UserCreationForm):
                 user = super().save(True)
                 verification = Verification(user=user, code=code)
                 verification.save()
-                return user
+            logger.info('set verification for %s with code: %s', user.phone, code)
+            return user
 
         return super().save(False)
 
@@ -61,3 +66,4 @@ class VerificationForm(forms.Form):
         with transaction.atomic():
             user.save()
             user.verification.delete()
+        logger.info('activated user with phone %s', user.phone)

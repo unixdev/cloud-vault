@@ -4,6 +4,10 @@ from django.views.generic import CreateView, FormView
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import SignupForm, VerificationForm
 
+from logging import getLogger
+
+logger = getLogger('vault.core')
+
 
 class SignupView(CreateView):
     form_class = SignupForm
@@ -12,6 +16,7 @@ class SignupView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
+        logger.info('submitted signup form with phone: %s', user.phone)
         user.is_active = False
         return super().form_valid(form)
 
