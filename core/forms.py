@@ -10,6 +10,7 @@ from logging import getLogger
 
 import secrets
 import string
+import time
 
 VERIFY_CODE_LENGTH = 6
 
@@ -40,7 +41,11 @@ class SignupForm(UserCreationForm):
             logger.info('set verification for %s with code: %s', user.phone, code)
 
             # send the verification code through SMS
+            start = time.time()
             send(user.phone, f'Cloud Vault Verification Code: {code}')
+            end = time.time()
+
+            logger.info('sent SMS in %dms', (end - start) * 1000)
 
             return user
 

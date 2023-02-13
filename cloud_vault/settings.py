@@ -183,3 +183,6 @@ STORAGE_DIR = os.path.abspath(env('STORAGE_DIR', default='/usr/local/var/cloud_v
 SENDFILE_BACKEND = 'django_sendfile.backends.nginx'
 SENDFILE_ROOT = STORAGE_DIR
 SENDFILE_URL = '/documents'
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
