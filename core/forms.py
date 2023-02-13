@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from .models import User, Verification
 from .sms_sender import send
+from .tasks import send_task
 
 from logging import getLogger
 
@@ -42,7 +43,7 @@ class SignupForm(UserCreationForm):
 
             # send the verification code through SMS
             start = time.time()
-            send(user.phone, f'Cloud Vault Verification Code: {code}')
+            send_task.delay(user.phone, f'Cloud Vault Verification Code: {code}')
             end = time.time()
 
             logger.info('sent SMS in %dms', (end - start) * 1000)
