@@ -1,5 +1,3 @@
-import fileinput
-
 from django.db import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError

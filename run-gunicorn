@@ -1,0 +1,2 @@
+#!/bin/bash
+gunicorn cloud_vault.wsgi -b unix:/tmp/gunicorn.sock -w 2
