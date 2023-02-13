@@ -25,6 +25,14 @@ pip install --upgrade pip         # upgrade pip, it's a good thing to do
 pip install -r requirements.txt   # install our dependencies in the virtual environment
 ```
 
-### Install PostgreSQL
+### Set Up ngix
 
-Install PostgreSQL. 
+Install nginx with the package manager in your OS. The main configuration is
+in [this file](docs/cloud_vault.conf). Put it in the `servers` or `sites-available`
+folder in the nginx config folder. You will need to add a symlink in the
+`sites-enabled` folder.  Also place the [proxy_params](docs/proxy_params)
+file in the main folder of nginix configuration.
+
+### Set Up redis
+
+Just install redis using the package manager of your OS.
