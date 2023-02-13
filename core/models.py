@@ -3,7 +3,11 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.utils.translation import gettext_lazy as _
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 from os import path
+
+fs = FileSystemStorage(settings.STORAGE_DIR)
 
 
 class User(AbstractBaseUser):
@@ -38,7 +42,7 @@ class Verification(models.Model):
 
 
 def file_location(document, filename):
-    return f'documents/{document.user.id}/{filename}'
+    return f'{document.user.id}/{filename}'
 
 
 def validate_file_size(file):
@@ -55,6 +59,7 @@ class Document(models.Model):
     file = models.FileField(
         validators=[validate_file_size],
         upload_to=file_location,
+        storage=fs,
     )
     note = models.TextField(max_length=1000, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

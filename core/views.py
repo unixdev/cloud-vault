@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import login_required
+
+from django_sendfile import sendfile
+
 from .forms import SignupForm, VerificationForm
 from .models import Document
 
@@ -101,3 +105,8 @@ class DocumentListView(ListView):
         user = self.request.user
         return super().get_queryset().filter(user=user).order_by('created_at')
 
+
+@login_required
+def download(request, filename):
+    user = request.user
+    return sendfile(request, f'{user.id}/{filename}', attachment=True)

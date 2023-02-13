@@ -144,6 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #
 AUTH_USER_MODEL = 'core.User'
 LOGIN_REDIRECT_URL = '/core/home'
+LOGIN_URL = '/core/login'
 
 LOGGING = {
     'version': 1,
@@ -174,8 +175,11 @@ LOGGING = {
 
 SMS_API_KEY = env('SMS_API_KEY')
 
-STORAGE_DIR = os.path.abspath(env('STORAGE_DIR', default='/usr/local/var/cloud_vault/'))
+STORAGE_DIR = os.path.abspath(env('STORAGE_DIR', default='/usr/local/var/cloud_vault/documents'))
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(STORAGE_DIR, 'media')
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = os.path.join(STORAGE_DIR, 'media')
 
+SENDFILE_BACKEND = 'django_sendfile.backends.nginx'
+SENDFILE_ROOT = STORAGE_DIR
+SENDFILE_URL = '/documents'

@@ -12,5 +12,6 @@ urlpatterns = [
     path('verify/<str:phone>/', views.VerificationView.as_view(), name='verify'),
     path('documents/upload', views.DocumentCreateView.as_view(), name='upload'),
     path('documents/', views.DocumentListView.as_view(), name='list'),
+    path('downloads/<str:filename>', views.download, name='downloads'),
     path('home/', views.home, name='home'),
 ]

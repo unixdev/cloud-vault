@@ -13,7 +13,7 @@
         <tbody>
         {% for document in object_list %}
             <tr>
-                <td>{{ document.basename }}</td>
+                <td><a href="{% url 'core:downloads' document.basename %}">{{ document.basename }}</a></td>
                 <td>{{ document.created_at }}</td>
             </tr>
         {% empty %}
