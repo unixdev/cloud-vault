@@ -2,6 +2,7 @@
 {% block content %}
     <h1>Your Documents</h1>
 
+    <p>
     <table>
         <thead>
         <tr>
@@ -12,21 +13,26 @@
         <tbody>
         {% for document in object_list %}
             <tr>
-            <td>{{ document.file.name }}</td>
-            <td>{{ document.created_at }}</td>
+                <td>{{ document.basename }}</td>
+                <td>{{ document.created_at }}</td>
             </tr>
         {% empty %}
             <tr>
-            <td colspan="2">
-                No documents yet.
-            </td>
+                <td colspan="2">
+                    No documents yet.
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    </p>
 
-    <br>
+    <p>
+        <a href="{% url 'core:upload' %}">Upload New Document</a>
+    </p>
 
-    <a href="{% url 'core:upload' %}">Upload New Document</a>
+    <p>
+        <a href="{% url 'core:home' %}">Back to Home</a>
+    </p>
 
 {% endblock content %}
