@@ -33,6 +33,15 @@ folder in the nginx config folder. You will need to add a symlink in the
 `sites-enabled` folder.  Also place the [proxy_params](docs/proxy_params)
 file in the main folder of nginx configuration.
 
+__Important:__ Add host named `cloud-vault` to your `/etc/hosts` file with the
+IP address 127.0.0.1
+
+Here is a sample line from `/etc/hosts`
+
+```
+127.0.0.1       localhost       cloud-vault
+```
+
 ### Set Up redis
 
 Just install redis using the package manager of your OS.
@@ -94,3 +103,12 @@ advantage of using celery is that we can change the message queue software (ofte
 a message broker) very easily. In this project, we used celery and then we used `redis`
 as a message broker. It is quite easy to replace redis with a more traditional message
 broker like `RabbitMQ` or `ActiveMQ`.
+
+
+## How to Run The Project
+
+1. Configure and run nginx, or make sure it's running
+2. Run 'redis', or make sure it's running
+3. Run gunicorn with the [run-gunicorn](run-gunicorn) script
+4. Run the celery worker with `celery -A cloud_vault worker -l INFO`
+5. With your browser, go to http://clould-vault:8080/
